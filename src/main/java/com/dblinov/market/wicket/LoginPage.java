@@ -55,7 +55,9 @@ public class LoginPage extends WebPage {
                     setResponsePage(AdminPage.class, new PageParameters());
                 } else if (user.getPassword().equals(password)) {
                     loginStatus.setDefaultModelObject("Congratulations! You are a user");
-                    setResponsePage(ProductsPage.class, new PageParameters());
+                    PageParameters parameters = new PageParameters();
+                    parameters.add("userId", user.getId());
+                    setResponsePage(ProductsPage.class, parameters);
                 } else {
                     loginStatus.setDefaultModelObject("Wrong username or password!");
                 }

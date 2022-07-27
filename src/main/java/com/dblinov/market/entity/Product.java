@@ -82,16 +82,12 @@ public class Product {
     //TODO исправить и перенести
     public void increaseQuantity() {
         quantity++;
-        ProductController productController = new ProductController();
-        productController.updateProduct(this);
     }
 
     //TODO исправить и перенести
     public void decreaseQuantity(int amount) {
-        if (!(quantity < 1)) {
+        if (!(quantity - amount < 0)) {
             quantity -= amount;
-            ProductController productController = new ProductController();
-            productController.updateProduct(this);
         }
     }
 }

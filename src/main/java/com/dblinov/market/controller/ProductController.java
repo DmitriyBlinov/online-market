@@ -11,7 +11,7 @@ public class ProductController {
     public ProductController() {
     }
 
-    public Product findProduct(int id) {
+    public Product findById(int id) {
         return productDao.findById(id);
     }
 

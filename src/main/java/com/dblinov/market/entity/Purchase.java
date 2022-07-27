@@ -78,10 +78,6 @@ public class Purchase {
         this.quantity = quantity;
     }
 
-    public void incrementQuantity() {
-        quantity += 1;
-    }
-
     public void increasePrice(int amount) {
         this.sum += amount;
     }
