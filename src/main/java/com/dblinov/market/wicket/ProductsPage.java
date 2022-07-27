@@ -55,6 +55,7 @@ public class ProductsPage extends WebPage {
                                 purchase.setQuantity(quantity);
                                 Date date = new Date();
                                 purchase.setDateOfPurchase(date);
+                                //TODO нужно проапдейтить продукт, убедиться, что он проапдейтился и только потом совершать purchase
                                 Product product = productController.findById(item.getModelObject().getId());
                                 purchase.setSum(quantity * product.getPrice());
                                 purchaseController.savePurchase(purchase);

@@ -47,6 +47,38 @@
                 <th><input wicket:id="price"/></th>
                 <th><input wicket:id="description"/></th>
                 <th><input wicket:id="update" id="update" type="submit" name="Update" value="Update"/></th>
+                <th><input wicket:id="delete" id="delete" type="submit" name="Delete" value="Delete"/></th>
+            </tr>
+            </tbody>
+        </table>
+        <p>
+            <input wicket:id="add" type="submit" name="Add new" value="Add new"/>
+        </p>
+    </fieldset>
+</form>
+
+<form id="purchasesForm" method="get" wicket:id="purchasesForm">
+    <fieldset>
+        <legend style="color: #F90">Purchases</legend>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>UserID</th>
+                <th>ProductID</th>
+                <th>Quantity</th>
+                <th>Total amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="purchases">
+                <th wicket:id="id"></th>
+                <th wicket:id="date"></th>
+                <th wicket:id="userId"></th>
+                <th wicket:id="productId"></th>
+                <th wicket:id="quantity"></th>
+                <th wicket:id="sum"></th>
             </tr>
             </tbody>
         </table>

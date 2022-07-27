@@ -12,6 +12,10 @@ public class User {
     @Basic
     @Column(name = "name")
     private String name;
+    /*
+    ВМЕСТО STRING ЗДЕСЬ ИСПОЛЬЗОВАЛ БЫ CHAR[], ЧТОБЫ МОЖНО БЫЛО ЗАТЕРЕТЬ
+    ПОСЛЕ ИСПОЛЬЗОВАНИЯ, НО ДЛЯ УПРОЩЕНИЯ ВЫБРАН ВАРИАНТ СО STRING
+    */
     @Basic
     @Column(name = "password")
     private String password;
@@ -35,7 +39,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = String.valueOf(password);
     }
 

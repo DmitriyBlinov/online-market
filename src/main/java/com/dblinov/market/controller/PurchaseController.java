@@ -27,7 +27,7 @@ public class PurchaseController {
         purchaseDao.update(purchase);
     }
 
-    public List<Purchase> findAllProducts() {
+    public List<Purchase> findAllPurchases() {
         return purchaseDao.findAll();
     }
 }

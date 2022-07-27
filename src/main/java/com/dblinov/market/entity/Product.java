@@ -1,7 +1,5 @@
 package com.dblinov.market.entity;
 
-import com.dblinov.market.controller.ProductController;
-
 import javax.persistence.*;
 
 @Entity
@@ -23,7 +21,7 @@ public class Product {
     @Basic
     @Column(name = "description")
     private String description;
-    @Basic
+    @Version
     @Column(name = "version")
     private Long version;
 
@@ -79,12 +77,10 @@ public class Product {
         this.version = version;
     }
 
-    //TODO исправить и перенести
     public void increaseQuantity() {
         quantity++;
     }
 
-    //TODO исправить и перенести
     public void decreaseQuantity(int amount) {
         if (!(quantity - amount < 0)) {
             quantity -= amount;
