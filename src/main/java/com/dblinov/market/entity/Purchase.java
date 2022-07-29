@@ -2,12 +2,14 @@ package com.dblinov.market.entity;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "purchases", schema = "public", catalog = "market")
-public class Purchase {
+public class Purchase implements Serializable {
+    private static final long serialVersionUID = -1768511858753931581L;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -25,7 +27,6 @@ public class Purchase {
     @Column(name = "date")
     private java.sql.Date date;
 
-    //МЕНЯЛ ДЛЯ SUM И QUANTITY НА INTEGER
     @Basic
     @Column(name = "sum")
     private int sum;

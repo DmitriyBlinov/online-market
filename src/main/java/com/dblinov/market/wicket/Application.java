@@ -13,7 +13,9 @@ public class Application extends WebApplication {
     public void init()
     {
         super.init();
-        // add your configuration here
         getApplicationSettings().setPageExpiredErrorPage(LoginPage.class);
+        mountPage("/login", LoginPage.class);
+        mountPage("/products", ProductsPage.class);
+        mountPage("/admin-panel", AdminPage.class);
     }
 }

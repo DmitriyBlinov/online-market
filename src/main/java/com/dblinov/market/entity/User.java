@@ -1,10 +1,12 @@
 package com.dblinov.market.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "market")
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -1768511858833931581L;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

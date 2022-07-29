@@ -3,29 +3,6 @@
 <head>
     <meta charset="utf-8"/>
     <title>Products</title>
-    <style>
-        table {
-            border-spacing: 0 10px;
-            font:  bold 100% Georgia, serif;
-            margin: 40px auto;
-            text-shadow: 5px 5px 5px #3F3F7F;
-            background: #B1B9D9;
-            text-align: center;
-            vertical-align: middle;
-            width: 50%;
-            border: 10px solid blue;
-        }
-
-        .films, .add, .page, .add-film {
-            border-spacing: 0 10px;
-            font:  bold 100% Georgia, serif;
-            margin: 40px auto;
-            text-shadow: 5px 5px 5px #3F3F7F;
-            text-align: center;
-            vertical-align: middle;
-            width: 50%;
-        }
-    </style>
 </head>
 <body>
 <form id="productsForm" method="get" wicket:id="productsForm">
@@ -42,17 +19,17 @@
             </thead>
             <tbody>
             <tr wicket:id="products">
-                <th><input wicket:id="name"/></th>
-                <th><input wicket:id="quantity"/></th>
-                <th><input wicket:id="price"/></th>
-                <th><input wicket:id="description"/></th>
+                <th><input size=10 wicket:id="name"/></th>
+                <th><input size=10 wicket:id="quantity"/></th>
+                <th><input size=10 wicket:id="price"/></th>
+                <th><input size=20 wicket:id="description"/></th>
                 <th><input wicket:id="update" id="update" type="submit" name="Update" value="Update"/></th>
                 <th><input wicket:id="delete" id="delete" type="submit" name="Delete" value="Delete"/></th>
             </tr>
             </tbody>
         </table>
         <p>
-            <input wicket:id="add" type="submit" name="Add new" value="Add new"/>
+            <input wicket:id="add" id="add" type="submit" name="Add new" value="Add new"/>
         </p>
     </fieldset>
 </form>

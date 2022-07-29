@@ -3,9 +3,11 @@ package com.dblinov.market.controller;
 import com.dblinov.market.dao.PurchaseDao;
 import com.dblinov.market.entity.Purchase;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PurchaseController {
+public class PurchaseController implements Serializable {
+    private static final long serialVersionUID = -1769512858853931581L;
     private PurchaseDao purchaseDao = new PurchaseDao();
 
     public PurchaseController() {

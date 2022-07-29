@@ -4,9 +4,11 @@ import com.dblinov.market.dao.UserDao;
 import com.dblinov.market.entity.Purchase;
 import com.dblinov.market.entity.User;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UserController {
+public class UserController implements Serializable {
+    private static final long serialVersionUID = -1769512858853931584L;
     private UserDao usersDao = new UserDao();
 
     public UserController() {

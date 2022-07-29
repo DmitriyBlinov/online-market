@@ -24,6 +24,7 @@ public class ProductsPage extends WebPage {
     private final PurchaseController purchaseController = new PurchaseController();
     private final List<Product> products = productController.findAllProducts();
     private final Integer userId;
+    private Label purchaseStatus;
 
     public ProductsPage(final PageParameters parameters) {
         super(parameters);
@@ -35,7 +36,8 @@ public class ProductsPage extends WebPage {
     class ProductsForm extends Form<Iterable> {
         public ProductsForm(String id) {
             super(id);
-
+            purchaseStatus = new Label("purchaseStatus", Model.of(""));
+            add(purchaseStatus);
             add(new ListView<Product>("products", products) {
                 @Override
                 protected void populateItem(ListItem<Product> item) {
@@ -46,26 +48,37 @@ public class ProductsPage extends WebPage {
                     item.add(new Label("description", new PropertyModel(item.getModel(), "Description")));
                     item.add(new Button("buy") {
                         public void onSubmit() {
-                            //ЗДЕСЬ СОЗДАЕМ ОТДЕЛЬНУЮ ПОКУПКУ НА КАЖДЫЙ ТОВАР, ДОБАВЛЯЕМ ЕЕ В ОБЩИЙ СПИСОК
+                            purchaseStatus.setDefaultModelObject("");
                             int quantity = Integer.parseInt(quantityTextField.getModel().getObject());
                             if (quantity != 0) {
-                                Purchase purchase = new Purchase();
-                                purchase.setUserId(userId);
-                                purchase.setProductId(item.getModelObject().getId());
-                                purchase.setQuantity(quantity);
-                                Date date = new Date();
-                                purchase.setDateOfPurchase(date);
-                                //TODO нужно проапдейтить продукт, убедиться, что он проапдейтился и только потом совершать purchase
-                                Product product = productController.findById(item.getModelObject().getId());
-                                purchase.setSum(quantity * product.getPrice());
-                                purchaseController.savePurchase(purchase);
-                                product.decreaseQuantity(quantity);
-                                productController.updateProduct(product);
+                                makePurchase(item, quantity);
                             }
                         }
                     });
                 }
             });
+        }
+    }
+
+    public void makePurchase(ListItem<Product> item, int quantity) {
+        Purchase purchase = new Purchase();
+        purchase.setUserId(userId);
+        purchase.setProductId(item.getModelObject().getId());
+        purchase.setQuantity(quantity);
+        Date date = new Date();
+        purchase.setDateOfPurchase(date);
+
+        Product product = this.productController.findById(item.getModelObject().getId());
+        ProductController productController = new ProductController(product);
+        purchase.setSum(quantity * product.getPrice());
+        productController.decreaseQuantity(quantity);
+
+        boolean isProductUpdated = productController.updateProduct(product);
+        if (isProductUpdated) {
+            purchaseStatus.setDefaultModelObject("You've bought the item!");
+            purchaseController.savePurchase(purchase);
+        } else {
+            purchaseStatus.setDefaultModelObject("Item was not bought!");
         }
     }
 }

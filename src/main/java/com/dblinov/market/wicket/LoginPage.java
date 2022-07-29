@@ -16,7 +16,6 @@ import java.util.Objects;
 
 public class LoginPage extends WebPage {
 
-
     public LoginPage(final PageParameters parameters) {
         super(parameters);
         add(new LoginForm("loginForm"));
@@ -66,7 +65,6 @@ public class LoginPage extends WebPage {
                     String username = (String) usernameField.getDefaultModelObject();
                     String password = (String) passwordField.getDefaultModelObject();
 
-                    //TODO добавить регистрацию пользователя (отдельной кнопкой?)
                     User user = userController.findUserByName(username);
 
                     if (Objects.equals(null, user)) {

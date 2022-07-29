@@ -2,12 +2,8 @@ package com.dblinov.market.wicket;
 
 import com.dblinov.market.controller.ProductController;
 import com.dblinov.market.controller.PurchaseController;
-import com.dblinov.market.dao.ProductDao;
 import com.dblinov.market.entity.Product;
 import com.dblinov.market.entity.Purchase;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -18,7 +14,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.time.Duration;
 
 import java.util.*;
 
@@ -52,36 +47,23 @@ public class AdminPage extends WebPage {
                     item.add(description);
                     item.add(new Button("update") {
                         public void onSubmit() {
-                            //ИЗМЕНИЛИ ПРОДУКТ ПО НАЖАТИЮ КНОПКИ, ПРОАПДЕЙТИЛИ QUANTITY В UI
-                            Product product = productController.findById(item.getModelObject().getId());
-                            product.setName(name.getModel().getObject());
-                            product.setQuantity(Integer.parseInt(quantity.getModel().getObject()));
-                            product.setPrice(price.getModel().getObject());
-                            product.setDescription(description.getModel().getObject());
-                            productController.updateProduct(product);
-                            item.getModelObject().setQuantity(Integer.parseInt(quantity.getModel().getObject()));
+                            String nameValue = name.getModel().getObject();
+                            int quantityValue = Integer.parseInt(quantity.getModel().getObject());
+                            int priceValue = price.getModel().getObject();
+                            String descriptionValue = description.getModel().getObject();
+                            updateProduct(item, nameValue, quantityValue, priceValue, descriptionValue);
                         }
                     });
                     item.add(new Button("delete") {
                         public void onSubmit() {
-                            //ПРОСТО УДАЛЯЕМ ПРОДУКТ
-                            Product product = productController.findById(item.getModelObject().getId());
-                            productController.deleteProduct(product);
-                            setResponsePage(AdminPage.class, new PageParameters());
+                            deleteProduct(item);
                         }
                     });
                 }
             });
             add(new Button("add") {
                 public void onSubmit() {
-                    Product product = new Product();
-                    product.setName("Name");
-                    product.setPrice(0);
-                    product.setVersion(0);
-                    product.setQuantity(0);
-                    product.setDescription("Description");
-                    productController.saveProduct(product);
-                    setResponsePage(AdminPage.class, new PageParameters());
+                    addProduct();
                 }
             });
         }
@@ -103,5 +85,32 @@ public class AdminPage extends WebPage {
                 }
             });
         }
+    }
+
+    public void updateProduct(ListItem<Product> item, String name, int quantity, int price, String description) {
+        Product product = productController.findById(item.getModelObject().getId());
+        product.setName(name);
+        product.setQuantity(quantity);
+        product.setPrice(price);
+        product.setDescription(description);
+        productController.updateProduct(product);
+        item.getModelObject().setQuantity(quantity);
+    }
+
+    public void addProduct() {
+        Product product = new Product();
+        product.setName("Name");
+        product.setPrice(0);
+        product.setVersion(0);
+        product.setQuantity(0);
+        product.setDescription("Description");
+        productController.saveProduct(product);
+        setResponsePage(AdminPage.class, new PageParameters());
+    }
+
+    public void deleteProduct(ListItem<Product> item) {
+        Product product = productController.findById(item.getModelObject().getId());
+        productController.deleteProduct(product);
+        setResponsePage(AdminPage.class, new PageParameters());
     }
 }

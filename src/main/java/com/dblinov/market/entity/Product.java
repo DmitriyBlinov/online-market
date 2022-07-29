@@ -1,10 +1,12 @@
 package com.dblinov.market.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "products", schema = "public", catalog = "market")
-public class Product {
+public class Product implements Serializable {
+    private static final long serialVersionUID = -1766511858853931581L;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -75,15 +77,5 @@ public class Product {
 
     public void setVersion(long version) {
         this.version = version;
-    }
-
-    public void increaseQuantity() {
-        quantity++;
-    }
-
-    public void decreaseQuantity(int amount) {
-        if (!(quantity - amount < 0)) {
-            quantity -= amount;
-        }
     }
 }
