@@ -1,23 +1,22 @@
 # Online Market
 
-## Тестовый стенд:
+## Versions:
 * Tomcat 9.0.35
 * Wicket 9.11.0
 * Java 11
-* Postgresql 42.4.0
 * Hibernate 5.6.5.Final
 
-## Как запустить:
-Запуск производится из IDE, поэтому Tomcat автоматически в соответствии с настройками деплоил созданный war и прилож запускается на https://localhost:8087/Market_war_exploded/login. Важно использовать именно 9 Tomcat, из-за какой-то странной ошибки текущая версия Wicket'а с 10-м конфликтует (вроде бы распространенная ошибка, судя по стаку и тикетам ни гитхабе).
+## User manual:
+Please use IDE so the Tomcat could be automatically configured according to the deployment configuration. The app will be launched on the following address: https://localhost:8087/Market_war_exploded/login. Make sure to use the Wicket version mentioned above to avoid any version conflicts.
 
-## Подключение к БД (по настройкам в hibernate.cfg):
-* Адрес: jdbc:postgresql://localhost:5432/market
-* Юзернейм: postgres
-* Пароль: root
+## Database connection (hibernate.cfg):
+* Address: jdbc:postgresql://localhost:5432/market
+* Username: postgres
+* Password: root
 
-Дамп БД лежит в корневой папке проекта (market.sql).
+DB dump could be found in the root folder (market.sql).
 
-## Как проверять нагрузку: 
+## Stress test: 
 
 Создан сервлет (```UpdateServlet```) и отдельный скрипт на python, который запросом на эндпоинт ```http://localhost:8087/Market_war_exploded/updateProduct``` в цикле изменяет количество определенного продукта, пока оно не станет 0. Сам скрипт прикладываю на всякий случай, для корректной работы нужно изменить значение переменных quantity и version на актуальные значения из БД для нужного продукта (нужно для корректной десериализации json в сервлете). Запускается из консоли с помощью python 3 (с установленным модулем ```requests```): ```python3 update.py```.
 
