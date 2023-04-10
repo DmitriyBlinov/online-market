@@ -16,7 +16,7 @@ Please use IDE so the Tomcat could be automatically configured according to the 
 
 DB dump could be found in the root folder (market.sql).
 
-## Stress test: 
+## Smoke test: 
 
 You could use (```UpdateServlet```) alongside custom python script to send a request using the following endpoint ```http://localhost:8087/Market_war_exploded/updateProduct```. The servlet will change the quantity of the specified product until it reaches zero quantity. Please make sure to change the quantity and version to their current database values so the json deserialization in servlet could work properly. The script could be launched from the terminal using the python 3 (with the ```requests``` module): ```python3 update.py```.
 
