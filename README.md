@@ -20,16 +20,12 @@ DB dump could be found in the root folder (market.sql).
 
 Создан сервлет (```UpdateServlet```) и отдельный скрипт на python, который запросом на эндпоинт ```http://localhost:8087/Market_war_exploded/updateProduct``` в цикле изменяет количество определенного продукта, пока оно не станет 0. Сам скрипт прикладываю на всякий случай, для корректной работы нужно изменить значение переменных quantity и version на актуальные значения из БД для нужного продукта (нужно для корректной десериализации json в сервлете). Запускается из консоли с помощью python 3 (с установленным модулем ```requests```): ```python3 update.py```.
 
-Скрипт лежит в корневой папке проекта (update.py).
+Script could be found in the root folder (update.py).
 
-## Что сделано для обеспечения параллельного доступа: 
+## Concurrency: 
 
-Реализован оптимистичный лок записей у product через добавление тега Version. Метод ```decreaseQuantity()``` сделал synchronized в ```ProductController```, он отвечает за изменение кол-ва товара на складе.
+Product table has an optimistic lock (using the @Version tag). ```decreaseQuantity()``` method in ```ProductController``` marked as synschornized due to its relation to the products quantity.
 
 ## Креды для логина:
 * Юзер: user/user
 * Админ: admin/admin
-
-## Из того, что нужно доделать:
-
-Нужно добавить логирование. На данный момент кажется, что проблема в расположении xml-файла с пропертями, т.к. сделано все по доке. Тем не менее, ни в WEB-INF, ни в resources он его как будто не видит. 
