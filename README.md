@@ -18,7 +18,7 @@ DB dump could be found in the root folder (market.sql).
 
 ## Stress test: 
 
-Создан сервлет (```UpdateServlet```) и отдельный скрипт на python, который запросом на эндпоинт ```http://localhost:8087/Market_war_exploded/updateProduct``` в цикле изменяет количество определенного продукта, пока оно не станет 0. Сам скрипт прикладываю на всякий случай, для корректной работы нужно изменить значение переменных quantity и version на актуальные значения из БД для нужного продукта (нужно для корректной десериализации json в сервлете). Запускается из консоли с помощью python 3 (с установленным модулем ```requests```): ```python3 update.py```.
+You could use (```UpdateServlet```) alongside custom python script to send a request using the following endpoint ```http://localhost:8087/Market_war_exploded/updateProduct```. The servlet will change the quantity of the specified product until it reaches zero quantity. Please make sure to change the quantity and version to their current database values so the json deserialization in servlet could work properly. The script could be launched from the terminal using the python 3 (with the ```requests``` module): ```python3 update.py```.
 
 Script could be found in the root folder (update.py).
 
@@ -26,6 +26,6 @@ Script could be found in the root folder (update.py).
 
 Product table has an optimistic lock (using the @Version tag). ```decreaseQuantity()``` method in ```ProductController``` marked as synschornized due to its relation to the products quantity.
 
-## Креды для логина:
-* Юзер: user/user
-* Админ: admin/admin
+## App login credentials:
+* User: user/user
+* Admin: admin/admin
