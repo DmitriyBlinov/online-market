@@ -2,9 +2,9 @@
 
 ## Versions:
 * Tomcat 9.0.35
-* Wicket 9.11.0
 * Java 11
 * Hibernate 5.6.5.Final
+* Wicket 9.11.0
 
 ## User manual:
 Please use IDE so the Tomcat could be automatically configured according to the deployment configuration. The app will be launched on the following address: https://localhost:8087/Market_war_exploded/login. Make sure to use the Wicket version mentioned above to avoid any version conflicts.
