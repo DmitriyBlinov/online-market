@@ -14,7 +14,7 @@ public class HibernateSessionFactory {
 
     public static SessionFactory getSessionFactory() {
         Configuration configuration = new Configuration();
-        configuration.configure();
+        configuration.configure("hibernate.cfg.xml");
 
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Product.class);

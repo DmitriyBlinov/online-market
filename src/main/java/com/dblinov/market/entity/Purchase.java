@@ -39,6 +39,14 @@ public class Purchase implements Serializable {
 
     }
 
+    public Purchase(int userId, int productId, Date date, int sum, int quantity) {
+        this.userId = userId;
+        this.productId = productId;
+        this.date = date;
+        this.sum = sum;
+        this.quantity = quantity;
+    }
+
     public int getUserId() {
         return userId;
     }

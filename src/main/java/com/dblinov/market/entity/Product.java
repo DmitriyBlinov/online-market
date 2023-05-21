@@ -31,6 +31,13 @@ public class Product implements Serializable {
 
     }
 
+    public Product(String name, int price, int quantity, String description) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+    }
+
     public int getQuantity() {
         return quantity;
     }
