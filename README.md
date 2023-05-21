@@ -22,10 +22,6 @@ You could use (```UpdateServlet```) alongside custom python script to send a req
 
 Script could be found in the root folder (update.py).
 
-## Concurrency
-
-Product table has an optimistic lock (using the @Version tag). ```decreaseQuantity()``` method in ```ProductController``` marked as synschornized due to its relation to the products quantity.
-
 ## App login credentials
 * User: user/user
 * Admin: admin/admin
