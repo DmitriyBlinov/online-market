@@ -26,7 +26,7 @@ public class AdminPage extends WebPage {
     private final PurchaseDao purchaseDao = new PurchaseDaoImpl();
     private final ProductDao productDao = new ProductDaoImpl();
     private final List<Product> products = productDao.findAll();
-    private final List<Purchase> purchases = purchaseDao.getAllPurchases();
+    private final List<Purchase> purchases = purchaseDao.findAll();
     private static final Logger logger = LoggerFactory.getLogger(AdminPage.class);
 
     public AdminPage(final PageParameters parameters) {

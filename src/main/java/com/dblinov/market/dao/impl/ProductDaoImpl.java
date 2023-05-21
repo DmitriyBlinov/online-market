@@ -44,20 +44,19 @@ public class ProductDaoImpl implements ProductDao, Serializable {
     public boolean update(Product product) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
-        boolean isUpdated = false;
         try {
             session.beginTransaction();
             session.merge(product);
             session.getTransaction().commit();
             logger.info("The Product ID {} was updated", product.getId());
-            isUpdated = true;
+            return true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             logger.error(e.getMessage());
         } finally {
             session.close();
         }
-        return isUpdated;
+        return false;
     }
 
     public void delete(Product product) {

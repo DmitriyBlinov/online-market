@@ -61,13 +61,14 @@ public class UserDaoImpl implements UserDao, Serializable {
         }
     }
 
-    public void update(User user) {
+    public boolean update(User user) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.merge(user);
             session.getTransaction().commit();
             logger.info("The User ID {} was updated", user.getId());
+            return true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             e.printStackTrace();
@@ -75,6 +76,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         } finally {
             session.close();
         }
+        return false;
     }
 
     public void delete(User user) {
@@ -93,7 +95,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         }
     }
 
-    public List<User> getAllUsers() {
+    public List<User> findAll() {
         final String query = "SELECT * FROM users";
         try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
             return session.createNativeQuery(query, User.class).list();

@@ -43,13 +43,14 @@ public class PurchaseDaoImpl implements PurchaseDao,Serializable {
         }
     }
 
-    public void update(Purchase purchase) {
+    public boolean update(Purchase purchase) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.merge(purchase);
             session.getTransaction().commit();
             logger.info("The Purchase ID {} was updated", purchase.getId());
+            return true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             e.printStackTrace();
@@ -57,6 +58,7 @@ public class PurchaseDaoImpl implements PurchaseDao,Serializable {
         } finally {
             session.close();
         }
+        return false;
     }
 
     public void delete(Purchase purchase) {
@@ -75,7 +77,7 @@ public class PurchaseDaoImpl implements PurchaseDao,Serializable {
         }
     }
 
-    public List<Purchase> getAllPurchases() {
+    public List<Purchase> findAll() {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Purchase> criteria = builder.createQuery(Purchase.class);
