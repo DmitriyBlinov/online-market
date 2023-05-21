@@ -15,8 +15,8 @@ public class User implements Serializable {
     @Column(name = "name")
     private String name;
     /*
-    ВМЕСТО STRING ЗДЕСЬ ИСПОЛЬЗОВАЛ БЫ CHAR[], ЧТОБЫ МОЖНО БЫЛО ЗАТЕРЕТЬ
-    ПОСЛЕ ИСПОЛЬЗОВАНИЯ, НО ДЛЯ УПРОЩЕНИЯ ВЫБРАН ВАРИАНТ СО STRING
+    This field better be stored as a char array for the privacy reasons
+    String type chosen for simplicity
     */
     @Basic
     @Column(name = "password")

@@ -1,7 +1,9 @@
-package com.dblinov.market.wicket;
+package com.dblinov.market.wicket.pages;
 
-import com.dblinov.market.controller.ProductController;
-import com.dblinov.market.controller.PurchaseController;
+import com.dblinov.market.dao.ProductDao;
+import com.dblinov.market.dao.PurchaseDao;
+import com.dblinov.market.dao.impl.ProductDaoImpl;
+import com.dblinov.market.dao.impl.PurchaseDaoImpl;
 import com.dblinov.market.entity.Product;
 import com.dblinov.market.entity.Purchase;
 import org.apache.wicket.markup.html.WebPage;
@@ -15,14 +17,16 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class ProductsPage extends WebPage {
-
-    private final ProductController productController = new ProductController();
-    private final PurchaseController purchaseController = new PurchaseController();
-    private final List<Product> products = productController.findAllProducts();
+    private static final Logger logger = LoggerFactory.getLogger(ProductsPage.class);
+    private final ProductDao productDao = new ProductDaoImpl();
+    private final PurchaseDao purchaseDao = new PurchaseDaoImpl();
+    private final List<Product> products = productDao.findAll();
     private final Integer userId;
     private Label purchaseStatus;
 
@@ -68,17 +72,28 @@ public class ProductsPage extends WebPage {
         Date date = new Date();
         purchase.setDateOfPurchase(date);
 
-        Product product = this.productController.findById(item.getModelObject().getId());
-        ProductController productController = new ProductController(product);
-        purchase.setSum(quantity * product.getPrice());
-        productController.decreaseQuantity(quantity);
+        Optional<Product> productOptional = productDao.findById(item.getModelObject().getId());
+        if (!productOptional.isPresent()) {
+            purchaseStatus.setDefaultModelObject("Item was not bought!");
+            return;
+        }
+        purchase.setSum(quantity * productOptional.get().getPrice());
 
-        boolean isProductUpdated = productController.updateProduct(product);
+        final boolean isProductUpdated = decreaseQuantity(productOptional.get(), quantity);
         if (isProductUpdated) {
             purchaseStatus.setDefaultModelObject("You've bought the item!");
-            purchaseController.savePurchase(purchase);
+            purchaseDao.save(purchase);
         } else {
             purchaseStatus.setDefaultModelObject("Item was not bought!");
         }
+    }
+
+    private boolean decreaseQuantity(Product product, int amount) {
+        if (product.getQuantity() - amount > 0) {
+            int quantity = product.getQuantity() - amount;
+            product.setQuantity(quantity);
+            return productDao.update(product);
+        }
+        return false;
     }
 }

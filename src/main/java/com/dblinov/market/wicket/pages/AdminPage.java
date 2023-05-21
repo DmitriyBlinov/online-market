@@ -1,7 +1,9 @@
-package com.dblinov.market.wicket;
+package com.dblinov.market.wicket.pages;
 
-import com.dblinov.market.controller.ProductController;
-import com.dblinov.market.controller.PurchaseController;
+import com.dblinov.market.dao.ProductDao;
+import com.dblinov.market.dao.PurchaseDao;
+import com.dblinov.market.dao.impl.ProductDaoImpl;
+import com.dblinov.market.dao.impl.PurchaseDaoImpl;
 import com.dblinov.market.entity.Product;
 import com.dblinov.market.entity.Purchase;
 import org.apache.wicket.markup.html.WebPage;
@@ -14,16 +16,18 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class AdminPage extends WebPage {
     private static final long serialVersionUID = 1L;
-    private final PurchaseController purchaseController = new PurchaseController();
-    private final ProductController productController = new ProductController();
-    private List<Product> products = productController.findAllProducts();
-    private final List<Purchase> purchases = purchaseController.findAllPurchases();
-
+    private final PurchaseDao purchaseDao = new PurchaseDaoImpl();
+    private final ProductDao productDao = new ProductDaoImpl();
+    private final List<Product> products = productDao.findAll();
+    private final List<Purchase> purchases = purchaseDao.getAllPurchases();
+    private static final Logger logger = LoggerFactory.getLogger(AdminPage.class);
 
     public AdminPage(final PageParameters parameters) {
         super(parameters);
@@ -88,12 +92,16 @@ public class AdminPage extends WebPage {
     }
 
     public void updateProduct(ListItem<Product> item, String name, int quantity, int price, String description) {
-        Product product = productController.findById(item.getModelObject().getId());
+        Optional<Product> productOptional = productDao.findById(item.getModelObject().getId());
+        if (!productOptional.isPresent()) {
+            return;
+        }
+        Product product = productOptional.get();
         product.setName(name);
         product.setQuantity(quantity);
         product.setPrice(price);
         product.setDescription(description);
-        productController.updateProduct(product);
+        productDao.update(product);
         item.getModelObject().setQuantity(quantity);
     }
 
@@ -104,13 +112,16 @@ public class AdminPage extends WebPage {
         product.setVersion(0);
         product.setQuantity(0);
         product.setDescription("Description");
-        productController.saveProduct(product);
+        productDao.save(product);
         setResponsePage(AdminPage.class, new PageParameters());
     }
 
     public void deleteProduct(ListItem<Product> item) {
-        Product product = productController.findById(item.getModelObject().getId());
-        productController.deleteProduct(product);
+        Optional<Product> productOptional = productDao.findById(item.getModelObject().getId());
+        if (!productOptional.isPresent()) {
+            return;
+        }
+        productDao.delete(productOptional.get());
         setResponsePage(AdminPage.class, new PageParameters());
     }
 }
