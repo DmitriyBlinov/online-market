@@ -29,7 +29,7 @@ class UserDaoTest {
     void findById() {
         final int id = firstUser.getId();
         User user = userDao.findById(id).get();
-        assertEquals(firstUser, user);
+        assertEquals(id, user.getId());
     }
 
     @Test

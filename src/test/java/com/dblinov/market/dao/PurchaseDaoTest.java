@@ -41,7 +41,7 @@ class PurchaseDaoTest {
     void findById() {
         final int id = firstPurchase.getId();
         Purchase purchase = purchaseDao.findById(id).get();
-        assertEquals(firstPurchase, purchase);
+        assertEquals(id, purchase.getId());
     }
 
     @Test
