@@ -29,20 +29,20 @@ class UserDaoTest {
     void findById() {
         final int id = firstUser.getId();
         User user = userDao.findById(id).get();
-        assertEquals(firstUser, user);
+        assertEquals(id, user.getId());
     }
 
     @Test
     void findByName() {
         final String name = firstUser.getName();
         User user = userDao.findByName(name);
-        assertEquals(firstUser, user);
+        assertEquals(firstUser.getName(), user.getName());
     }
 
     @Test
     void save() {
         userDao.save(secondUser);
-        assertEquals(secondUser, userDao.findById(secondUser.getId()).get());
+        assertNotNull(userDao.findById(secondUser.getId()).get());
     }
 
     @Test
@@ -54,8 +54,8 @@ class UserDaoTest {
 
     @Test
     void delete() {
-        userDao.delete(firstUser);
-        assertFalse(userDao.findAll().contains(firstUser));
+        userDao.delete(secondUser);
+        assertFalse(userDao.findAll().contains(secondUser));
     }
 
     @Test

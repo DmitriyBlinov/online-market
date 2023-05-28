@@ -1,20 +1,16 @@
 package com.dblinov.market.dao.impl;
 
 import com.dblinov.market.dao.UserDao;
-import com.dblinov.market.entity.Purchase;
 import com.dblinov.market.utils.HibernateSessionFactory;
 import com.dblinov.market.entity.User;
 import org.hibernate.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class UserDaoImpl implements UserDao, Serializable {
     private static final long serialVersionUID = -1769511858853931581L;
@@ -49,7 +45,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.persist(user);
+            session.saveOrUpdate(user);
             session.getTransaction().commit();
             logger.info("The User ID {} was saved", user.getId());
         } catch (Exception e) {

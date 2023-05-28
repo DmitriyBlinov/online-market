@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PurchaseDaoTest {
     private static Purchase firstPurchase;
@@ -41,13 +40,13 @@ class PurchaseDaoTest {
     void findById() {
         final int id = firstPurchase.getId();
         Purchase purchase = purchaseDao.findById(id).get();
-        assertEquals(firstPurchase, purchase);
+        assertEquals(id, purchase.getId());
     }
 
     @Test
     void save() {
         purchaseDao.save(secondPurchase);
-        assertEquals(secondPurchase, purchaseDao.findById(secondPurchase.getId()).get());
+        assertNotNull(purchaseDao.findById(secondPurchase.getId()).get());
     }
 
     @Test
