@@ -1,7 +1,6 @@
 package com.dblinov.market.dao.impl;
 
 import com.dblinov.market.dao.PurchaseDao;
-import com.dblinov.market.entity.Product;
 import com.dblinov.market.entity.Purchase;
 import com.dblinov.market.utils.HibernateSessionFactory;
 import org.hibernate.Session;
