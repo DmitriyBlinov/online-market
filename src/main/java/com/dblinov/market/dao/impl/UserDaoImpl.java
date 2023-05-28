@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.persist(user);
+            session.saveOrUpdate(user);
             session.getTransaction().commit();
             logger.info("The User ID {} was saved", user.getId());
         } catch (Exception e) {

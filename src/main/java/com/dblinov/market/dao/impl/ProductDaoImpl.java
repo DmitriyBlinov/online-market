@@ -30,7 +30,7 @@ public class ProductDaoImpl implements ProductDao, Serializable {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.persist(product);
+            session.saveOrUpdate(product);
             session.getTransaction().commit();
             logger.info("The Product ID {} was saved", product.getId());
         } catch (Exception e) {

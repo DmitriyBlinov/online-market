@@ -31,7 +31,7 @@ public class PurchaseDaoImpl implements PurchaseDao,Serializable {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.persist(purchase);
+            session.saveOrUpdate(purchase);
             session.getTransaction().commit();
             logger.info("The Purchase ID {} was saved", purchase.getId());
         } catch (Exception e) {
