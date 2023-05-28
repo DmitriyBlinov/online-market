@@ -7,7 +7,7 @@
 * Wicket 9.11.0
 
 ## User manual
-Please use IDE so the Tomcat could be automatically configured according to the deployment configuration (the build Market-1.0-SNAPSHOT is located in online-market/target/). The app will be launched on the following address: <tomcat_configuration>/login. Make sure to use the Wicket version mentioned above to avoid any version conflicts.
+Please use IDE so the Tomcat could be automatically configured according to the deployment configuration (the build is located in online-market/.idea/artifacts/online_market_war_exploded.xml). The app will be launched on the following address: <tomcat_configuration>/login. Make sure to use the Wicket version mentioned above to avoid any version conflicts.
 
 ## Database connection (hibernate.cfg)
 * Address: jdbc:postgresql://localhost:<port>/market
